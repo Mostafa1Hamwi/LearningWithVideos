@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\Unit;
 use App\Models\User;
 use App\Models\Language;
+use App\Models\Question;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -69,6 +70,14 @@ class DatabaseSeeder extends Seeder
             'email' => 'Mostafa@test.com',
             'password' => $password,
             'role_id' => 1,
+        ]);
+
+        Question::create([
+            'type' => 't',
+            'question' => 'How are you ?',
+            'answer' => 'fine',
+            'choices' => 'good',
+            'unit_id' => '2',
         ]);
 
         DB::table('unit_user')->insert([

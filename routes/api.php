@@ -6,10 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\VideoController;
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\QuestionController;
-use App\Http\Controllers\VideoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,11 +45,20 @@ Route::delete('/languageDelete/{id}', [LanguageController::class, 'destroy']);
 Route::get('/{languages:id}/units', [UnitController::class, 'index']);
 Route::post('/unitAdd', [UnitController::class, 'store']);
 Route::delete('/unitDelete/{id}', [UnitController::class, 'destroy']);
+//Get all units (ready or not)
+Route::get('/{languages:id}/unitsAll', [UnitController::class, 'all']);
+//Get unit content
+Route::get('/units/{units:id}', [UnitController::class, 'content']);
 
 //Videos Routes
 Route::get('/{units:id}/videos', [VideoController::class, 'index']);
 Route::post('/videoAdd', [VideoController::class, 'store']);
 Route::delete('/videoDelete/{id}', [VideoController::class, 'destroy']);
+
+//Lessons Routes
+Route::get('/{units:id}/lessons', [LessonController::class, 'index']);
+Route::post('/lessonAdd', [LessonController::class, 'store']);
+Route::delete('/lessonDelete/{id}', [LessonController::class, 'destroy']);
 
 //Questions Routes
 Route::get('/{units:id}/questions', [QuestionController::class, 'index']);
