@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Lesson;
-use App\Models\Question;
 use App\Models\Unit;
 use App\Models\Video;
+use App\Models\Lesson;
+use App\Models\Question;
 use Illuminate\Http\Request;
+use App\Http\Controllers\QuestionController;
 
 class UnitController extends Controller
 {
@@ -27,10 +28,19 @@ class UnitController extends Controller
 
     public function content($id)
     {
+
+        $questions = Question::where('unit_id', $id)->get();
+        foreach ($questions as $question) {
+            foreach ($question->choices as $choice) {
+                $choices = $choice;
+            }
+        }
+
         $content = [
+            'unit_overview' => Unit::where('id', $id)->pluck('unit_overview'),
             'videos' => Video::where('unit_id', $id)->get(),
             'lessons' => Lesson::where('unit_id', $id)->get(),
-            'questions' => Question::where('unit_id', $id)->get()
+            'questions' => $questions
         ];
 
 
@@ -41,6 +51,7 @@ class UnitController extends Controller
     {
         $fields = $request->validate([
             'unit_name' => 'required|string|unique:units,unit_name',
+            'unit_overview' => 'required|string|unique:units,unit_overview',
             'unit_level' => 'required|string|in:Beginner,Intermediate,Advanced',
             'unit_status' => 'required|string|in:Done,Undone',
             'language_id' => 'required|exists:languages,id'

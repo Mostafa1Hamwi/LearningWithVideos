@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('languages', function (Blueprint $table) {
             $table->id();
             $table->string('language_name');
+            $table->string('language_photo')->default('illustration-1.png');;
             $table->timestamps();
         });
     }

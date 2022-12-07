@@ -19,18 +19,22 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+
+        //default
+
+        //
+
         $fields = $request->validate([
             'first_name' => 'required|string|min:2|max:10',
             'last_name' => 'required|string|min:1|max:10',
             'gender' => 'required|string|in:m,f',
             'birth_date' => 'required|date',
-            'user_photo' => 'string',
             'email' => 'required|string|unique:users,email',
             'password' => 'required|string|confirmed',
             'role_id' => 'exists:roles,id'
-
         ]);
 
+        $fields['user_photo'] = 'illustration-1.png';
         $fields['password'] = bcrypt($fields['password']);
         $fields['role_id'] = '3';
 
@@ -70,6 +74,26 @@ class AuthController extends Controller
         ];
 
         return response($response, 201);
+    }
+
+    public function info()
+    {
+
+        $user = User::where(
+            'id',
+            auth('api')->user()->id
+
+        )->get();
+
+        $response = [
+            'user' => $user
+
+        ];
+
+        return response([
+            'data' => $response,
+            'message' => 'Retrieve successfully'
+        ], 200);
     }
 
     public function logout(Request $request)

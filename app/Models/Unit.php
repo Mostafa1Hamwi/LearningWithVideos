@@ -30,4 +30,9 @@ class Unit extends Model
     {
         return $this->hasMany(Question::class);
     }
+
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
+    }
 }

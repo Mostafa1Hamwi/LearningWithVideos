@@ -11,6 +11,8 @@ class ProfileController extends Controller
     public function update(User $user)
     {
 
+
+
         $attributes = request()->validate([
             'first_name' => 'required|string|min:2|max:10',
             'last_name' => 'required|string|min:1|max:10',
@@ -19,6 +21,7 @@ class ProfileController extends Controller
             'user_photo' => 'required|string',
 
         ]);
+
 
         // //thumbnail processsing
         // if (isset($attributes['profilePic'])) {

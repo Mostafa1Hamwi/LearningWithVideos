@@ -27,6 +27,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 //Profile
+Route::get('/info', [AuthController::class, 'info']);
 Route::patch('/profile/{user:id}', [ProfileController::class, 'update']);
 
 //User manipulation route
@@ -64,6 +65,8 @@ Route::delete('/lessonDelete/{id}', [LessonController::class, 'destroy']);
 Route::get('/{units:id}/questions', [QuestionController::class, 'index']);
 Route::post('/questionAdd', [QuestionController::class, 'store']);
 Route::delete('/questionDelete/{id}', [QuestionController::class, 'destroy']);
+//Get question with answers
+Route::get('/questions/{questions:id}', [QuestionController::class, 'getQuestionWithAnswers']);
 
 //Protected Routes
 Route::group(['middleware' => ['auth:sanctum']], function () {

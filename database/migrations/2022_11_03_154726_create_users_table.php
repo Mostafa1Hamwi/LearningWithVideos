@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->char('gender');
             $table->date('birth_date');
-            $table->string('user_photo')->nullable();
+            $table->string('user_photo')->default('illustration-1.png');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

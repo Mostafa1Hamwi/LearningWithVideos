@@ -17,9 +17,13 @@ class LanguageController extends Controller
 
     public function store(Request $request)
     {
+
+
         $fields = $request->validate([
-            'language_name' => 'required|string|unique:languages,language_name'
+            'language_name' => 'required|string|unique:languages,language_name',
+            'language_photo' => 'string'
         ]);
+
 
         $language = Language::create($fields);
 
