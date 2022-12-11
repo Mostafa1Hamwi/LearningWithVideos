@@ -43,8 +43,8 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function unit()
+    public function units()
     {
-        return $this->belongsTo(Unit::class);
+        return $this->belongsToMany(Unit::class);
     }
 }

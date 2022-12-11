@@ -31,6 +31,7 @@ class QuestionController extends Controller
     {
         $fields = $request->validate([
             'type' => 'required|string|in:t,a,p,v',
+            'question_link' => 'string',
             'question' => 'required|string|unique:questions,question',
             'unit_id' => 'required|exists:units,id',
         ]);

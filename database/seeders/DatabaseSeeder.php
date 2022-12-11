@@ -72,7 +72,7 @@ class DatabaseSeeder extends Seeder
             'last_name' => 'Hamwi',
             'gender' => 'm',
             'birth_date' => '2001-08-05',
-            'user_photo' => '/images/users/illustration-1.gif',
+            'user_photo' => 'illustration-1.gif',
             'email' => 'Mostafa@test.com',
             'password' => $password,
             'role_id' => 1,

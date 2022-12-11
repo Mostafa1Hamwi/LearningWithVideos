@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Unit;
+use App\Models\User;
 use App\Models\Video;
 use App\Models\Lesson;
 use App\Models\Question;
@@ -45,6 +46,23 @@ class UnitController extends Controller
 
 
         return response($content, 200);
+    }
+
+    public function userUnitComplete($id)
+    {
+        $user = User::where(
+            'id',
+            auth('api')->user()->id
+
+        )->first();
+
+        $unitt = Unit::find($id);
+        $new_id = $id + 1;
+
+        $user->units()->detach($unitt, ['status' => 0]);
+        $user->units()->attach($unitt, ['status' => 1]);
+
+        return response($unitt, 200);
     }
 
     public function store(Request $request)

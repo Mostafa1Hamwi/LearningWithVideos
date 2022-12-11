@@ -20,10 +20,6 @@ class AuthController extends Controller
     public function register(Request $request)
     {
 
-        //default
-
-        //
-
         $fields = $request->validate([
             'first_name' => 'required|string|min:2|max:10',
             'last_name' => 'required|string|min:1|max:10',
@@ -34,7 +30,7 @@ class AuthController extends Controller
             'role_id' => 'exists:roles,id'
         ]);
 
-        $fields['user_photo'] = 'illustration-1.png';
+        $fields['user_photo'] = 'illustration-1.gif';
         $fields['password'] = bcrypt($fields['password']);
         $fields['role_id'] = '3';
 
@@ -83,16 +79,14 @@ class AuthController extends Controller
             'id',
             auth('api')->user()->id
 
-        )->get();
+        )->first();
 
-        $response = [
-            'user' => $user
-
-        ];
+        foreach ($user->units as $unit) {
+        }
 
         return response([
-            'data' => $response,
-            'message' => 'Retrieve successfully'
+            'user' => $user,
+            'message' => 'Retrieved successfully'
         ], 200);
     }
 

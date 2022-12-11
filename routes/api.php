@@ -41,6 +41,8 @@ Route::delete('/roleDelete/{id}', [RoleController::class, 'destroy']);
 Route::get('/languages', [LanguageController::class, 'index']);
 Route::post('/languageAdd', [LanguageController::class, 'store']);
 Route::delete('/languageDelete/{id}', [LanguageController::class, 'destroy']);
+// User Add Language
+Route::post('/user/languageAdd/{languages:id}', [LanguageController::class, 'addUserLanguage']);
 
 //Units Routes
 Route::get('/{languages:id}/units', [UnitController::class, 'index']);
@@ -50,6 +52,8 @@ Route::delete('/unitDelete/{id}', [UnitController::class, 'destroy']);
 Route::get('/{languages:id}/unitsAll', [UnitController::class, 'all']);
 //Get unit content
 Route::get('/units/{units:id}', [UnitController::class, 'content']);
+//Set unit completed for a specific user
+Route::post('/setUnitComplete/{units:id}', [UnitController::class, 'userUnitComplete']);
 
 //Videos Routes
 Route::get('/{units:id}/videos', [VideoController::class, 'index']);
