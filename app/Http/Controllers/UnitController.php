@@ -8,6 +8,8 @@ use App\Models\Video;
 use App\Models\Lesson;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use App\Achievements\CompleteFirstUnit;
+use Assada\Achievements\Event\Unlocked;
 use App\Http\Controllers\QuestionController;
 
 class UnitController extends Controller
@@ -61,6 +63,8 @@ class UnitController extends Controller
 
         $user->units()->detach($unitt, ['status' => 0]);
         $user->units()->attach($unitt, ['status' => 1]);
+
+        $user->unlock(new CompleteFirstUnit());
 
         return response($unitt, 200);
     }

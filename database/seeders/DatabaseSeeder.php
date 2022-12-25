@@ -78,29 +78,29 @@ class DatabaseSeeder extends Seeder
             'role_id' => 1,
         ]);
 
-        Question::create([
-            'type' => 't',
-            'question' => 'Are you watching TV?',
-            'unit_id' => '2',
-        ]);
+        // Question::create([
+        //     'type' => 't',
+        //     'question' => 'Are you watching TV?',
+        //     'unit_id' => '2',
+        // ]);
 
-        Choice::create([
-            'choice' => 'Yes',
-            'is_correct' => '1',
-            'question_id' => '1'
-        ]);
+        // Choice::create([
+        //     'choice' => 'Yes',
+        //     'is_correct' => '1',
+        //     'question_id' => '1'
+        // ]);
 
-        Choice::create([
-            'choice' => 'Good',
-            'is_correct' => '0',
-            'question_id' => '1'
-        ]);
+        // Choice::create([
+        //     'choice' => 'Good',
+        //     'is_correct' => '0',
+        //     'question_id' => '1'
+        // ]);
 
-        Choice::create([
-            'choice' => 'Bad',
-            'is_correct' => '0',
-            'question_id' => '1'
-        ]);
+        // Choice::create([
+        //     'choice' => 'Bad',
+        //     'is_correct' => '0',
+        //     'question_id' => '1'
+        // ]);
 
         DB::table('unit_user')->insert([
             'unit_id' => '1',

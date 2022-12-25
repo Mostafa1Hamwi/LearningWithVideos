@@ -6,7 +6,11 @@ use App\Models\User;
 use App\Models\Language;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Assada\Achievements\Event\Unlocked;
 use Illuminate\Validation\Rules\Exists;
+use App\Achievements\ChooseFirstLanguage;
+use Assada\Achievements\Model\AchievementDetails;
+use Assada\Achievements\Model\AchievementProgress;
 
 class LanguageController extends Controller
 {
@@ -62,13 +66,17 @@ class LanguageController extends Controller
         ]);
 
         if ($state == 1) {
+            $user->unlock(new ChooseFirstLanguage());
+            $details = $user->achievementStatus(new ChooseFirstLanguage());
+            Unlocked::dispatch($details);
             $response = [
-                "message" => "Language Added successfully"
+                "message" => "Language Added successfully",
             ];
         } else
             $response = [
                 "message" => "Error"
             ];
+
 
         return response($response, 200);
     }

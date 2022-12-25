@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AchievementController;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -71,6 +72,12 @@ Route::post('/questionAdd', [QuestionController::class, 'store']);
 Route::delete('/questionDelete/{id}', [QuestionController::class, 'destroy']);
 //Get question with answers
 Route::get('/questions/{questions:id}', [QuestionController::class, 'getQuestionWithAnswers']);
+
+//Achievements Routes
+Route::get('/achievements/user', [AchievementController::class, 'getUserAchievements']);
+Route::get('/achievements/{id}', [AchievementController::class, 'show']);
+Route::get('/achievements', [AchievementController::class, 'index']);
+
 
 //Protected Routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
