@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Assada\Achievements\Achievement;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Assada\Achievements\Achievement;
 
 class AchievementController extends Controller
 {
@@ -36,5 +37,18 @@ class AchievementController extends Controller
         $achievements   = $user->achievements;
 
         return response($achievements, 200);
+    }
+
+    public function UnlockedLastTwoMinutes()
+    {
+        $user = User::where(
+            'id',
+            auth('api')->user()->id
+
+        )->first();
+
+        $unlocked = $user->achievements()->where('unlocked_at', '>=', Carbon::now()->subHours(2)->toDateTimeString())->get();
+
+        return response($unlocked, 200);
     }
 }

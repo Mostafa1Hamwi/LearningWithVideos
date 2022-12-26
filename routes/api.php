@@ -75,6 +75,7 @@ Route::get('/questions/{questions:id}', [QuestionController::class, 'getQuestion
 
 //Achievements Routes
 Route::get('/achievements/user', [AchievementController::class, 'getUserAchievements']);
+Route::get('/achievements/latest', [AchievementController::class, 'UnlockedLastTwoMinutes']);
 Route::get('/achievements/{id}', [AchievementController::class, 'show']);
 Route::get('/achievements', [AchievementController::class, 'index']);
 
