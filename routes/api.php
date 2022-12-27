@@ -12,6 +12,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\YouTubeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,6 +79,9 @@ Route::get('/achievements/user', [AchievementController::class, 'getUserAchievem
 Route::get('/achievements/latest', [AchievementController::class, 'UnlockedLastTwoMinutes']);
 Route::get('/achievements/{id}', [AchievementController::class, 'show']);
 Route::get('/achievements', [AchievementController::class, 'index']);
+
+//Youtube Subtitles
+Route::post('/youtube', YouTubeController::class);
 
 
 //Protected Routes

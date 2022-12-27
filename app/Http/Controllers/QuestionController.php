@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Choice;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ChoiceController;
-use App\Models\Choice;
 
 class QuestionController extends Controller
 {
@@ -29,12 +30,25 @@ class QuestionController extends Controller
 
     public function store(Request $request)
     {
+        $file_url = "";
+        $unit_id = $request->unit_id;
+        //Uploading Quiz Files to Google Drive
+        if (request('question_link')) {
+            $file = $request->file('question_link');
+            $file_name = $file->getClientOriginalName();
+            $file_path = Storage::disk("google")->putFileAs("LearnWithVideos/QuizMaterials/$unit_id", $file, $file_name);
+            $file_url = Storage::disk("google")->url($file_path);
+        }
+
         $fields = $request->validate([
             'type' => 'required|string|in:t,a,p,v',
-            'question_link' => 'string',
             'question' => 'required|string|unique:questions,question',
             'unit_id' => 'required|exists:units,id',
         ]);
+
+        if ($file_url != null)
+            $fields['question_link'] = $file_url;
+
 
         $question = Question::create($fields);
 

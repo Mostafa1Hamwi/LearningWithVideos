@@ -47,7 +47,7 @@ class AchievementController extends Controller
 
         )->first();
 
-        $unlocked = $user->achievements()->where('unlocked_at', '>=', Carbon::now()->subHours(2)->toDateTimeString())->get();
+        $unlocked = $user->achievements()->where('unlocked_at', '>=', Carbon::now()->subMinutes(3)->toDateTimeString())->get();
 
         return response($unlocked, 200);
     }
