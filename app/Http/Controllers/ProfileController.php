@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Language;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -19,7 +20,6 @@ class ProfileController extends Controller
             'user_photo' => 'required|string',
 
         ]);
-
 
         // //thumbnail processsing
         // if (isset($attributes['profilePic'])) {

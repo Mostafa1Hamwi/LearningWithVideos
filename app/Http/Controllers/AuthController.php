@@ -83,9 +83,11 @@ class AuthController extends Controller
 
         foreach ($user->units as $unit) {
         }
+        $user_progress = LanguageController::getUserProgress();
 
         return response([
             'user' => $user,
+            'user_progress' => $user_progress,
             'message' => 'Retrieved successfully'
         ], 200);
     }

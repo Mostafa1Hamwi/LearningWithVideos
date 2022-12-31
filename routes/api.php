@@ -45,6 +45,13 @@ Route::post('/languageAdd', [LanguageController::class, 'store']);
 Route::delete('/languageDelete/{id}', [LanguageController::class, 'destroy']);
 // User Add Language
 Route::post('/user/languageAdd/{languages:id}', [LanguageController::class, 'addUserLanguage']);
+//Get Languages Progress
+Route::get('/user/languages/progress', [LanguageController::class, 'getUserProgress']);
+//Get User Languages
+Route::get('/user/languages', [LanguageController::class, 'getUserUnits']);
+
+Route::get('/languages/count', [LanguageController::class, 'countUnitsInLanguages']);
+
 
 //Units Routes
 Route::get('/{languages:id}/units', [UnitController::class, 'index']);

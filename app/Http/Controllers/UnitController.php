@@ -8,6 +8,7 @@ use App\Models\Video;
 use App\Models\Lesson;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Achievements\CompleteFirstUnit;
 use Assada\Achievements\Event\Unlocked;
 use App\Http\Controllers\QuestionController;
@@ -58,15 +59,23 @@ class UnitController extends Controller
 
         )->first();
 
+        //insert next unit if it does exist
         $unitt = Unit::find($id);
-        $new_id = $id + 1;
+        $new_unit = Unit::where('id', '>', $unitt->id)->where('language_id', $unitt->language_id)->first();
+        if ($new_unit) {
+            DB::table('unit_user')->insert([
+                'unit_id' => $new_unit->id,
+                'user_id' => $user->id,
+            ]);
+        }
 
+        //set old unit status to one (completed)
         $user->units()->detach($unitt, ['status' => 0]);
         $user->units()->attach($unitt, ['status' => 1]);
 
         $user->unlock(new CompleteFirstUnit());
 
-        return response($unitt, 200);
+        return response($new_unit, 200);
     }
 
     public function store(Request $request)
