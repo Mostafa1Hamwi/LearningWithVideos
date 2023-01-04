@@ -2,13 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Language;
+use App\Models\Favourite;
 use App\Models\User;
+use App\Models\Language;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
+
+    public static function increasePoints($p)
+    {
+        $user = User::where(
+            'id',
+            auth('api')->user()->id
+
+        )->first();
+        $user->update(['points' => $user->points + $p]);
+    }
+
+
     public function update(User $user)
     {
 
@@ -36,5 +50,65 @@ class ProfileController extends Controller
         ]);
 
         return response('done', 200);
+    }
+
+    public function setFavourite(Request $request)
+    {
+        $user = User::where(
+            'id',
+            auth('api')->user()->id
+
+        )->first();
+
+        $response = 'The word is already in this user library';
+
+        $exist = Favourite::where('user_id', $user->id)->where('vocabulary', $request->vocabulary)->first();
+
+        if ($exist == null) {
+            $fields = $request->validate([
+                'vocabulary' => 'required',
+            ]);
+            $fields['user_id'] = $user->id;
+
+            $word = Favourite::create($fields);
+
+            $response = [
+                'message' => 'Word added to user library successfully'
+            ];
+        }
+        return response($response, 200);
+    }
+
+    public function deleteFavourite(Request $request)
+    {
+        $user = User::where(
+            'id',
+            auth('api')->user()->id
+
+        )->first();
+
+        $response = 'The word does not exist in user library';
+
+        $exist = Favourite::where('user_id', $user->id)->where('vocabulary', $request->vocabulary)->first();
+        if ($exist) {
+            Favourite::destroy($exist->id);
+            $response = [
+                'message' => 'Word deleted from user library successfully'
+            ];
+        }
+        return response($response, 200);
+    }
+
+    public function getFavourites()
+    {
+        $user = User::where(
+            'id',
+            auth('api')->user()->id
+
+        )->first();
+
+        $words = Favourite::where('user_id', $user->id)->get();
+
+        return response($words, 200);
     }
 }

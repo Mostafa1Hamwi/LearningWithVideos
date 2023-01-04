@@ -40,6 +40,23 @@ class QuestionController extends Controller
             $file_url = Storage::disk("google")->url($file_path);
         }
 
+
+        if (request('type') == 0) {
+            $request['type'] = 'p';
+        }
+
+        if (request('type') == 1) {
+            $request['type'] = 'v';
+        }
+
+        if (request('type') == 2) {
+            $request['type'] = 'a';
+        }
+
+        if (request('type') == 3) {
+            $request['type'] = 't';
+        }
+
         $fields = $request->validate([
             'type' => 'required|string|in:t,a,p,v',
             'question' => 'required|string|unique:questions,question',

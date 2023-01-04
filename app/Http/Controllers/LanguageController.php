@@ -69,9 +69,12 @@ class LanguageController extends Controller
 
         //Unlock Achievement
         if ($state == 1) {
-            $user->unlock(new ChooseFirstLanguage());
             $details = $user->achievementStatus(new ChooseFirstLanguage());
-            Unlocked::dispatch($details);
+            if ($details->unlocked_at == null) {
+                $user->unlock(new ChooseFirstLanguage());
+            }
+            // $details = $user->achievementStatus(new ChooseFirstLanguage());
+            // Unlocked::dispatch($details);
             $response = [
                 "message" => "Language Added successfully",
             ];

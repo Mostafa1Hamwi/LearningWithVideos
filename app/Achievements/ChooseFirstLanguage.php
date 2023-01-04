@@ -23,8 +23,8 @@ class ChooseFirstLanguage extends Achievement
      */
     public $description = 'Congrats you have chosen your first language';
 
-    public function whenUnlocked($progress)
-    {
-        return response('Ach Umlocked', 200);
-    }
+    // public function whenUnlocked($progress)
+    // {
+    //     return response('Ach Umlocked', 200);
+    // }
 }

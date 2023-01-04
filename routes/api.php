@@ -63,6 +63,8 @@ Route::get('/{languages:id}/unitsAll', [UnitController::class, 'all']);
 Route::get('/units/{units:id}', [UnitController::class, 'content']);
 //Set unit completed for a specific user
 Route::post('/setUnitComplete/{units:id}', [UnitController::class, 'userUnitComplete']);
+//Toggle
+Route::patch('/toggle/{units:id}', [UnitController::class, 'toggle']);
 
 //Videos Routes
 Route::get('/{units:id}/videos', [VideoController::class, 'index']);
@@ -86,6 +88,14 @@ Route::get('/achievements/user', [AchievementController::class, 'getUserAchievem
 Route::get('/achievements/latest', [AchievementController::class, 'UnlockedLastTwoMinutes']);
 Route::get('/achievements/{id}', [AchievementController::class, 'show']);
 Route::get('/achievements', [AchievementController::class, 'index']);
+//Leadboards
+Route::get('/leadboards', [AchievementController::class, 'leadboards']);
+
+//User Favourites
+Route::get('/user/favourites', [ProfileController::class, 'getFavourites']);
+Route::delete('/user/favourites/delete', [ProfileController::class, 'deleteFavourite']);
+Route::post('/user/favourites/add', [ProfileController::class, 'setFavourite']);
+
 
 //Youtube Subtitles
 Route::post('/youtube', YouTubeController::class);
@@ -95,3 +105,7 @@ Route::post('/youtube', YouTubeController::class);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
+
+Route::get('/hi', function () {
+    return ['status' => 'success'];
+})->middleware('cors');

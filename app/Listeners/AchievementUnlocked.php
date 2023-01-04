@@ -2,10 +2,12 @@
 
 namespace App\Listeners;
 
+use App\Http\Controllers\ProfileController;
+use App\Models\User;
 use Assada\Achievements\Achievement;
 use Assada\Achievements\Event\Unlocked;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class AchievementUnlocked
 {
@@ -27,9 +29,12 @@ class AchievementUnlocked
      */
     public function handle(Unlocked $event)
     {
-        $achievement = [
-            'Achievement' => $event->progress,
-        ];
+
+        ProfileController::increasePoints(200);
+
+        // $achievement = [
+        //     'Achievement' => $event->progress,
+        // ];
 
         // return response($achievement, 200);
     }

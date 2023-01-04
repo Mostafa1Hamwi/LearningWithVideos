@@ -19,13 +19,14 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        $message = 'failed';
 
         $fields = $request->validate([
             'first_name' => 'required|string|min:2|max:10',
             'last_name' => 'required|string|min:1|max:10',
             'gender' => 'required|string|in:m,f',
             'birth_date' => 'required|date',
-            'email' => 'required|string|unique:users,email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|string|confirmed',
             'role_id' => 'exists:roles,id'
         ]);
@@ -35,12 +36,16 @@ class AuthController extends Controller
         $fields['role_id'] = '3';
 
         $user = User::create($fields);
+        if ($user) {
+            $message = 'success';
+        }
 
         $token = $user->createToken('myapptoken')->plainTextToken;
 
         $response = [
             'user' => $user,
-            'token' => $token
+            'token' => $token,
+            'message' => $message,
         ];
         return response($response, 201);
     }
@@ -48,7 +53,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $fields = $request->validate([
-            'email' => 'required|string',
+            'email' => 'required|email',
             'password' => 'required|string'
         ]);
 
@@ -59,14 +64,15 @@ class AuthController extends Controller
         if (!$user || !Hash::check($fields['password'], $user->password)) {
             return response([
                 'message' => 'Bad credintials'
-            ], 401);
+            ], 200);
         }
 
         $token = $user->createToken('myapptoken')->plainTextToken;
 
         $response = [
             'user' => $user,
-            'token' => $token
+            'token' => $token,
+            'message' => 'success'
         ];
 
         return response($response, 201);
