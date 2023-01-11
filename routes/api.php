@@ -27,7 +27,10 @@ use App\Http\Controllers\YouTubeController;
 //Public Routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-
+//Register Teacher
+Route::post('/registerTeacher', [AuthController::class, 'registerTeacher']);
+//Delete user
+Route::delete('/userDelete/{id}', [AuthController::class, 'destroy']);
 //Profile
 Route::get('/info', [AuthController::class, 'info']);
 Route::patch('/profile/{user:id}', [ProfileController::class, 'update']);
@@ -63,6 +66,8 @@ Route::get('/{languages:id}/unitsAll', [UnitController::class, 'all']);
 Route::get('/units/{units:id}', [UnitController::class, 'content']);
 //Set unit completed for a specific user
 Route::post('/setUnitComplete/{units:id}', [UnitController::class, 'userUnitComplete']);
+//Submit paragraph
+Route::patch('/units/paragraph/submit/{units:id}', [UnitController::class, 'storeParagraph']);
 //Toggle
 Route::patch('/toggle/{units:id}', [UnitController::class, 'toggle']);
 

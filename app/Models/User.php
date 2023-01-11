@@ -53,7 +53,7 @@ class User extends Authenticatable
 
     public function units()
     {
-        return $this->belongsToMany(Unit::class);
+        return $this->belongsToMany(Unit::class)->withPivot(['status', 'quiz_mark', 'paragraph'])->withTimestamps();
     }
 
     public function getFullNameAttribute()

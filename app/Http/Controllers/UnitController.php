@@ -88,6 +88,33 @@ class UnitController extends Controller
         return response($new_unit, 200);
     }
 
+    public function storeParagraph($id)
+    {
+        $response = "Something went wrongs";
+        $user = User::where(
+            'id',
+            auth('api')->user()->id
+
+        )->first();
+        $unit = DB::table('unit_user')->where('unit_id', $id)->where('user_id', $user->id)->first();
+
+        $attributes = request()->validate([
+            'content' => 'required',
+        ]);
+
+        // User::find($user)->units()->updateExistingPivot($roleId, $attributes);
+        if ($unit) {
+            $unit->update([
+                'paragraph' => $attributes['content'],
+            ]);
+            $response = "Success";
+        }
+
+        return response($response, 200);
+    }
+
+
+
     public function store(Request $request)
     {
         $fields = $request->validate([
