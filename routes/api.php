@@ -68,6 +68,10 @@ Route::get('/units/{units:id}', [UnitController::class, 'content']);
 Route::post('/setUnitComplete/{units:id}', [UnitController::class, 'userUnitComplete']);
 //Submit paragraph
 Route::patch('/units/paragraph/submit/{units:id}', [UnitController::class, 'storeParagraph']);
+//Evaluate paragraph
+Route::patch('/units/paragraph/evaluate', [UnitController::class, 'evaluateParagraph']);
+//Get UnEvaluated Paragraphs
+Route::get('/units/paragraph/unevaluated', [UnitController::class, 'getUnevaluatedParagraphs']);
 //Toggle
 Route::patch('/toggle/{units:id}', [UnitController::class, 'toggle']);
 
@@ -75,6 +79,11 @@ Route::patch('/toggle/{units:id}', [UnitController::class, 'toggle']);
 Route::get('/{units:id}/videos', [VideoController::class, 'index']);
 Route::post('/videoAdd', [VideoController::class, 'store']);
 Route::delete('/videoDelete/{id}', [VideoController::class, 'destroy']);
+//Add Hard Word To video
+Route::post('/hardWordAdd', [VideoController::class, 'addHardWords']);
+//Delete Word
+Route::delete('/hardWordDelete/{id}', [VideoController::class, 'deleteHardWords']);
+
 
 //Lessons Routes
 Route::get('/{units:id}/lessons', [LessonController::class, 'index']);

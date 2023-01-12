@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Achievements\CompleteFirstUnit;
 use Assada\Achievements\Event\Unlocked;
-use App\Http\Controllers\QuestionController;
 
 class UnitController extends Controller
 {
@@ -102,15 +101,39 @@ class UnitController extends Controller
             'content' => 'required',
         ]);
 
-        // User::find($user)->units()->updateExistingPivot($roleId, $attributes);
         if ($unit) {
-            $unit->update([
-                'paragraph' => $attributes['content'],
-            ]);
+            $user->units()->updateExistingPivot($id, ['paragraph' => $attributes['content']]);
             $response = "Success";
         }
 
         return response($response, 200);
+    }
+
+    public function evaluateParagraph(Request $request)
+    {
+        $fields = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'unit_id' => 'required|exists:units,id',
+            'evaluation' => 'required'
+        ]);
+
+        $user = User::find($fields['user_id']);
+        $unit = DB::table('unit_user')->where('unit_id', $fields['unit_id'])->where('user_id', $fields['user_id'])->first();
+
+
+        if ($unit) {
+            $user->units()->updateExistingPivot($fields['unit_id'], ['evaluation' => $fields['evaluation']]);
+            $response = "Success";
+        }
+
+        return response($response, 200);
+    }
+
+    public function getUnevaluatedParagraphs()
+    {
+        $units = DB::table('unit_user')->where('paragraph', '!=', null)->where('evaluation', null)->get();
+
+        return response($units, 200);
     }
 
 
