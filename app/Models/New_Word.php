@@ -5,19 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Video extends Model
+class New_Word extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function unit()
+    public function video()
     {
-        return $this->belongsTo(Unit::class);
-    }
-
-    public function new_words()
-    {
-        return $this->hasMany(New_Word::class);
+        return $this->belongsTo(Video::class);
     }
 }

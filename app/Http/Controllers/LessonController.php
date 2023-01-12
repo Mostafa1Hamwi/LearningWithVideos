@@ -22,6 +22,9 @@ class LessonController extends Controller
         $fields = $request->validate([
             'lesson_title' => 'required|string|unique:lessons,lesson_title',
             'lesson_content' => 'required|string',
+            'question' => 'string',
+            'answer' => 'string',
+            'choice' => 'string',
             'unit_id' => 'required|exists:units,id',
 
         ]);

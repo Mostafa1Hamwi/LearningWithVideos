@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\New_Word;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -11,6 +12,12 @@ class VideoController extends Controller
     public function index($id)
     {
         $videos = Video::where('unit_id', $id)->get();
+
+        foreach ($videos as $video) {
+            foreach ($video->new_words as $hard_words) {
+                # code...
+            }
+        }
 
         return response($videos, 200);
     }
@@ -50,6 +57,36 @@ class VideoController extends Controller
             'message' => 'Video Created Successfully'
         ];
         return response($response, 201);
+    }
+
+    public function addHardWords(Request $request)
+    {
+        $fields = $request->validate([
+            'word' => 'required|string',
+            'video_id' => 'required|exists:videos,id'
+        ]);
+
+        $word = New_Word::create($fields);
+        $response = [
+            'word' => $word,
+            'message' => 'word added Successfully'
+        ];
+
+        return response($response, 201);
+    }
+
+    public function deleteHardWords($id)
+    {
+        $word = New_Word::find($id);
+        if ($word)
+            $word->delete();
+        else {
+            $response = [
+                'message' => 'Word not found'
+            ];
+            return response($response, 400);
+        }
+        return response()->json('Word Deleted Successfully');
     }
 
     public function destroy($id)
