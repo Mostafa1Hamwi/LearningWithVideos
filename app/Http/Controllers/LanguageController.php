@@ -105,6 +105,24 @@ class LanguageController extends Controller
         return $units;
     }
 
+    public static function getUserLanguages()
+    {
+        $user = User::where(
+            'id',
+            auth('api')->user()->id
+
+        )->first();
+
+        $languages = [];
+        foreach ($user->units as $unit) {
+            if (!in_array($unit->language_id, $languages)) {
+                array_push($languages, $unit->language_id);
+            }
+        }
+
+        return $languages;
+    }
+
     public static function countUnitsInLanguages()
     {
         $units = DB::table('languages')->leftJoin('units', 'languages.id', '=', 'units.language_id')->select(DB::raw('languages.id, count(units.id) as units_count'))

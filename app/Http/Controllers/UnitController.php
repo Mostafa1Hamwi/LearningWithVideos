@@ -39,9 +39,16 @@ class UnitController extends Controller
             }
         }
 
+        $videos = Video::where('unit_id', $id)->get();
+        foreach ($videos as $video) {
+            foreach ($video->new_words as $hard_words) {
+                # code...
+            }
+        }
+
         $content = [
-            'unit_overview' => Unit::where('id', $id)->pluck('unit_overview'),
-            'videos' => Video::where('unit_id', $id)->get(),
+            'unit_overview' => Unit::where('id', $id)->value('unit_overview'),
+            'videos' => $videos,
             'lessons' => Lesson::where('unit_id', $id)->get(),
             'questions' => $questions
         ];
@@ -111,6 +118,7 @@ class UnitController extends Controller
 
     public function evaluateParagraph(Request $request)
     {
+        $response = 'make sure user submitted a paragraph';
         $fields = $request->validate([
             'user_id' => 'required|exists:users,id',
             'unit_id' => 'required|exists:units,id',
@@ -121,7 +129,7 @@ class UnitController extends Controller
         $unit = DB::table('unit_user')->where('unit_id', $fields['unit_id'])->where('user_id', $fields['user_id'])->first();
 
 
-        if ($unit) {
+        if ($unit->paragraph) {
             $user->units()->updateExistingPivot($fields['unit_id'], ['evaluation' => $fields['evaluation']]);
             $response = "Success";
         }

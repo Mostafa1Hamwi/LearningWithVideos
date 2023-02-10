@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::table('lessons', function (Blueprint $table) {
             $table->string('question')->after('lesson_content')->nullable();
             $table->string('answer')->after('question')->nullable();
-            $table->string('choice')->after('answer')->nullable();
+            $table->string('choice1')->after('answer')->nullable();
         });
     }
 
@@ -30,7 +30,8 @@ return new class extends Migration
         Schema::table('lessons', function (Blueprint $table) {
             $table->dropColumn('question');
             $table->dropColumn('answer');
-            $table->dropColumn('choice');
+            $table->dropColumn('choice1');
+            $table->dropColumn('choice2');
         });
     }
 };
