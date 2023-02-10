@@ -5,6 +5,7 @@ use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DailyController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\VideoController;
@@ -50,6 +51,8 @@ Route::delete('/languageDelete/{id}', [LanguageController::class, 'destroy']);
 Route::post('/user/languageAdd/{languages:id}', [LanguageController::class, 'addUserLanguage']);
 //Get Languages Progress
 Route::get('/user/languages/progress', [LanguageController::class, 'getUserProgress']);
+//Get Languages Progress
+Route::get('/user/languages/get', [LanguageController::class, 'getUserLanguages']);
 //Get User Languages
 Route::get('/user/languages', [LanguageController::class, 'getUserUnits']);
 
@@ -87,6 +90,7 @@ Route::delete('/hardWordDelete/{id}', [VideoController::class, 'deleteHardWords'
 
 //Lessons Routes
 Route::get('/{units:id}/lessons', [LessonController::class, 'index']);
+Route::get('/getlessons/{id}', [LessonController::class, 'show']);
 Route::post('/lessonAdd', [LessonController::class, 'store']);
 Route::delete('/lessonDelete/{id}', [LessonController::class, 'destroy']);
 
@@ -109,6 +113,11 @@ Route::get('/leadboards', [AchievementController::class, 'leadboards']);
 Route::get('/user/favourites', [ProfileController::class, 'getFavourites']);
 Route::delete('/user/favourites/delete', [ProfileController::class, 'deleteFavourite']);
 Route::post('/user/favourites/add', [ProfileController::class, 'setFavourite']);
+
+//Daily Routes
+Route::get('/daily', [DailyController::class, 'show']);
+Route::post('/dailyAdd', [DailyController::class, 'store']);
+Route::delete('/dailyDelete/{id}', [DailyController::class, 'destroy']);
 
 
 //Youtube Subtitles

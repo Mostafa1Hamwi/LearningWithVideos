@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('unit_user', function (Blueprint $table) {
-            $table->longText('paragraph')->after('quiz_mark')->nullable();
-            $table->double('evaluation')->after('paragraph')->nullable();
+        Schema::create('dailies', function (Blueprint $table) {
+            $table->id();
+            $table->string('content');
+            $table->string('category');
+            $table->timestamps();
         });
     }
 
@@ -26,9 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('unit_user', function (Blueprint $table) {
-            $table->dropColumn('paragraph');
-            $table->dropColumn('evaluation');
-        });
+        Schema::dropIfExists('dailies');
     }
 };

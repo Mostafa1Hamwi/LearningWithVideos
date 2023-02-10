@@ -14,7 +14,18 @@ class LessonController extends Controller
     {
         $lessons = Lesson::where('unit_id', $id)->get();
 
+        // $response = [
+        //     'id' => $lessons->id,
+        // ];
+
         return response($lessons, 200);
+    }
+
+    public function show($id)
+    {
+        $lesson = Lesson::where('id', $id)->get();
+
+        return response($lesson, 200);
     }
 
     public function store(Request $request)
@@ -24,7 +35,7 @@ class LessonController extends Controller
             'lesson_content' => 'required|string',
             'question' => 'string',
             'answer' => 'string',
-            'choice' => 'string',
+            'choice1' => 'string',
             'unit_id' => 'required|exists:units,id',
 
         ]);
